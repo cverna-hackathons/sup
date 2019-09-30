@@ -1,7 +1,22 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "description": "SUP web client",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cverna-hackathons/sup.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cverna-hackathons/sup/issues"
+  },
+  "homepage": "https://github.com/cverna-hackathons/sup#readme",
   "dependencies": {
     "@types/jest": "24.0.18",
     "@types/node": "12.7.8",
@@ -11,12 +26,6 @@
     "react-dom": "^16.10.1",
     "react-scripts": "3.1.2",
     "typescript": "3.6.3"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
