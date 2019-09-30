@@ -1,5 +1,5 @@
-import { ping } from './hello';
+import HelloController from './hello';
 
 test('Should have ping route', () => {
-  expect(typeof ping).toEqual('function');
+  expect(typeof HelloController.ping).toEqual('function');
 });
