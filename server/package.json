@@ -1,0 +1,55 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "description": "SUP server for web and API",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jest",
+    "build": "tsc --pretty",
+    "coverage": "jest --coverage",
+    "dev": "nodemon src/index.ts"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cverna-hackathons/sup.git"
+  },
+  "keywords": [
+    "sup",
+    "server"
+  ],
+  "author": "Peter Berezny",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cverna-hackathons/sup/issues"
+  },
+  "homepage": "https://github.com/cverna-hackathons/sup#readme",
+  "dependencies": {
+    "@types/jest": "^24.0.18",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^4.17.1",
+    "@types/morgan": "^1.7.37",
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.3",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0"
+  }
+}
