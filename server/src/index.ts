@@ -1,1 +1,3 @@
-export * from './http';
+import { start } from './http';
+
+start();

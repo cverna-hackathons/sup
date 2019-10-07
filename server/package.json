@@ -9,6 +9,13 @@
     "coverage": "jest --coverage",
     "dev": "nodemon src/index.ts"
   },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest",
+      "^.+\\.tsx?$": "ts-jest"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/cverna-hackathons/sup.git"
@@ -40,6 +47,7 @@
     "@types/morgan": "^1.7.37",
     "jest": "^24.9.0",
     "nodemon": "^1.19.3",
+    "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0"
   }

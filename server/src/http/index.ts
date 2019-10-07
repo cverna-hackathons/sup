@@ -8,16 +8,20 @@ import routes from './router';
 
 dotenv.config();
 
-const app: express.Application = express();
-const corsMiddleware = cors({ origin: '*', preflightContinue: true });
+export function start() {
+  const Server: express.Application = express();
+  const corsMiddleware = cors({ origin: '*', preflightContinue: true });
+  const { PORT } = process.env
+  
+  Server.use(bodyParser.urlencoded({ extended: false }));
+  Server.use(bodyParser.json());
+  Server.use(logger('dev'));
+  Server.use(corsMiddleware);
+  Server.options('*', corsMiddleware);
+  routes(Server).listen(PORT, () => {
+    // tslint:disable-next-line: no-console
+    console.info(`Server listening on port ${PORT}`)
+  });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(logger('dev'));
-app.use(corsMiddleware);
-app.options('*', corsMiddleware);
-routes(app).listen(process.env.PORT);
-
-export default app;
-
-
+  return Server;
+}

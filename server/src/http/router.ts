@@ -4,7 +4,7 @@ import {
   Request,
   Response
 } from 'express';
-import HelloController from '../controllers/hello';
+import * as HelloController from '../controllers/hello';
 
 const router = (app: Application) => {
   // init your main express router
