@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "SUP server for web and API",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "test": "jest",
     "build": "tsc --pretty",
