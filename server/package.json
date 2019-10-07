@@ -39,6 +39,7 @@
     "express": "^4.17.1",
     "morgan": "^1.9.1",
     "tslint-config-prettier": "^1.18.0",
+    "typeorm": "^0.2.19",
     "typescript": "^3.6.3"
   },
   "devDependencies": {
