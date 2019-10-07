@@ -11,7 +11,7 @@ dotenv.config();
 export function start() {
   const Server: express.Application = express();
   const corsMiddleware = cors({ origin: '*', preflightContinue: true });
-  const { PORT } = process.env
+  const { PORT = 3000 } = process.env
   
   Server.use(bodyParser.urlencoded({ extended: false }));
   Server.use(bodyParser.json());
