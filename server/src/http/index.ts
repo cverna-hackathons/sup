@@ -1,10 +1,12 @@
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import * as Debugger from 'debug';
 import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as logger from 'morgan';
+import { route } from './router';
 
-import routes from './router';
+const debug = Debugger('sup:http')
 
 dotenv.config();
 
@@ -18,9 +20,8 @@ export function start(): express.Application {
   app.use(logger('dev'));
   app.use(corsMiddleware);
   app.options('*', corsMiddleware);
-  routes(app).listen(NODE_PORT);
-  // tslint:disable-next-line: no-console
-  console.info(`Server listening on: ${NODE_HOST}:${NODE_PORT}`)
+  route(app).listen(NODE_PORT);
+  debug(`Server listening on: ${NODE_HOST}:${NODE_PORT}`)
 
   return app;
 }

@@ -1,3 +1,5 @@
-import { start } from './http';
+import { connect as connectDatabase } from './database';
+import { start as startServing } from './http';
 
-start();
+connectDatabase();
+startServing();

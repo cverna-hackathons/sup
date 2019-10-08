@@ -10,9 +10,9 @@ import * as Users from '../controllers/users';
 import { handle } from './errorHandler';
 import { RequestError } from './RequestError';
 
-const router = (app: Application) => {
+export const route = (app: Application) => {
   // init your main express router
-  const Api: Router = Router();
+  const Api = Router();
 
   // Generic routes
   app.get('/', (req: Request, res: Response) => {
@@ -28,7 +28,7 @@ const router = (app: Application) => {
   app.get('/ping', HelloController.ping);
 
   // API routes
-  Api.get('/users', Users.list)
+  Api.get('/users', Users.list);
   
   // handle GET request to /api/v1
   app.use('/api/v1', Api);
@@ -37,5 +37,3 @@ const router = (app: Application) => {
 
   return app;
 };
-
-export default router;
