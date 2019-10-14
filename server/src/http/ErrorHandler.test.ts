@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { handle } from './errorHandler';
+import { handle } from './ErrorHandler';
 import { RequestError } from './RequestError';
 
 const testErrorMessage = 'Test error'

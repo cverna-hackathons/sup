@@ -7,7 +7,7 @@ import {
 import 'express-async-errors';
 import * as HelloController from '../controllers/hello';
 import * as Users from '../controllers/users';
-import { handle } from './errorHandler';
+import { handle } from './ErrorHandler';
 import { RequestError } from './RequestError';
 
 export const route = (app: Application) => {
