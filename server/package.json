@@ -8,7 +8,11 @@
     "test": "jest",
     "build": "tsc --pretty",
     "coverage": "jest --coverage",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "db:migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
+    "db:migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",
+    "db:migration:run": "ts-node ./node_modules/.bin/typeorm migration:run",
+    "db:migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert"
   },
   "jest": {
     "verbose": true,
@@ -32,13 +36,22 @@
   },
   "homepage": "https://github.com/cverna-hackathons/sup#readme",
   "dependencies": {
+    "@types/debug": "^4.1.5",
     "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.11",
+    "@types/pg": "^7.11.2",
     "body-parser": "^1.19.0",
+    "class-validator": "^0.10.1",
     "cors": "^2.8.5",
+    "debug": "^4.1.1",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
     "morgan": "^1.9.1",
+    "pg": "^7.12.1",
+    "reflect-metadata": "^0.1.13",
     "tslint-config-prettier": "^1.18.0",
+    "typeorm": "^0.2.19",
     "typescript": "^3.6.3"
   },
   "devDependencies": {

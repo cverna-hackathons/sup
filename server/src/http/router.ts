@@ -1,27 +1,39 @@
 import {
   Application,
-  // Router,
   Request,
-  Response
+  Response,
+  Router,
 } from 'express';
+import 'express-async-errors';
 import * as HelloController from '../controllers/hello';
+import * as Users from '../controllers/users';
+import { handle } from './ErrorHandler';
+import { RequestError } from './RequestError';
 
-const router = (app: Application) => {
+export const route = (app: Application) => {
   // init your main express router
-  // const apiRouter: Router = Router();
+  const Api = Router();
 
-  // handle GET request to /api/v1
+  // Generic routes
   app.get('/', (req: Request, res: Response) => {
     res.send({
       message: `Main route: ${req.path}`
     });
   });
-
+  // Error throwing route
+  app.get('/throw', () => {
+    throw new RequestError('Example throw error');
+  });
+  
   app.get('/ping', HelloController.ping);
 
-  // app.use('/api/v1', apiRouter);
+  // API routes
+  Api.get('/users', Users.list);
+  
+  // handle GET request to /api/v1
+  app.use('/api/v1', Api);
+
+  app.use(handle);
 
   return app;
 };
-
-export default router;
