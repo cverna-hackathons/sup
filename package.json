@@ -1,0 +1,24 @@
+{
+  "name": "sup",
+  "version": "0.0.1",
+  "description": "Spolocna Umelecka Dielna",
+  "main": "package.json",
+  "scripts": {
+    "start": "lerna run start --stream",
+    "test": "lerna run test --stream",
+    "install-dependencies": "lerna bootstrap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cverna-hackathons/sup.git"
+  },
+  "author": "pejrak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cverna-hackathons/sup/issues"
+  },
+  "homepage": "https://github.com/cverna-hackathons/sup#readme",
+  "devDependencies": {
+    "lerna": "^3.18.1"
+  }
+}
