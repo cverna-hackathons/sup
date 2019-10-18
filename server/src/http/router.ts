@@ -10,10 +10,9 @@ import { attachControllers } from '@decorators/express';
 
 export const route = (app: Application) => {
   const apiRouter = Router();
-    
   // Top level routes
   attachControllers(app, [ BaseController ]);
-  // API routes  
+  // API routes
   // handle GET request to /api/v1  
   attachControllers(apiRouter, [ ImagesController ]);
   
