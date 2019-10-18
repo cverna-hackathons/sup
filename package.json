@@ -20,5 +20,6 @@
   "homepage": "https://github.com/cverna-hackathons/sup#readme",
   "devDependencies": {
     "lerna": "^3.18.1"
-  }
+  },
+  "dependencies": {}
 }
