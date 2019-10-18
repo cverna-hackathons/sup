@@ -5,14 +5,14 @@ import {
   Router,
 } from 'express';
 import 'express-async-errors';
-import * as HelloController from '../controllers/hello';
-import * as Users from '../controllers/users';
+import * as HelloController from '../controllers/HelloController';
+import { ImagesController } from '../controllers/ImagesController';
 import { handle } from './ErrorHandler';
 import { RequestError } from './RequestError';
+import { attachControllers } from '@decorators/express';
 
 export const route = (app: Application) => {
-  // init your main express router
-  const Api = Router();
+  const apiRouter = Router();
 
   // Generic routes
   app.get('/', (req: Request, res: Response) => {
@@ -27,12 +27,11 @@ export const route = (app: Application) => {
   
   app.get('/ping', HelloController.ping);
 
-  // API routes
-  Api.get('/users', Users.list);
+  // API routes  
+  // handle GET request to /api/v1  
+  attachControllers(apiRouter, [ ImagesController ]);
   
-  // handle GET request to /api/v1
-  app.use('/api/v1', Api);
-
+  app.use('/api/v1', apiRouter);
   app.use(handle);
 
   return app;
