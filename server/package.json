@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "SUP server for web and API",
   "main": "index.js",
   "private": true,
