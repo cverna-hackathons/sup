@@ -1,32 +1,18 @@
 import {
   Application,
-  Request,
-  Response,
   Router,
 } from 'express';
 import 'express-async-errors';
-import * as HelloController from '../controllers/HelloController';
+import { BaseController } from '../controllers/BaseController';
 import { ImagesController } from '../controllers/ImagesController';
 import { handle } from './ErrorHandler';
-import { RequestError } from './RequestError';
 import { attachControllers } from '@decorators/express';
 
 export const route = (app: Application) => {
   const apiRouter = Router();
-
-  // Generic routes
-  app.get('/', (req: Request, res: Response) => {
-    res.send({
-      message: `Main route: ${req.path}`
-    });
-  });
-  // Error throwing route
-  app.get('/throw', () => {
-    throw new RequestError('Example throw error');
-  });
-  
-  app.get('/ping', HelloController.ping);
-
+    
+  // Top level routes
+  attachControllers(app, [ BaseController ]);
   // API routes  
   // handle GET request to /api/v1  
   attachControllers(apiRouter, [ ImagesController ]);
