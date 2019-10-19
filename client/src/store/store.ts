@@ -1,10 +1,10 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { reducers } from './reducers';
-import { UsersState } from './reducers/UsersReducer';
+import { ImagesState } from './reducers/ImagesReducer';
 
 export interface State {
-  users: UsersState;
+  images: ImagesState;
 }
 
 // @ts-ignore
