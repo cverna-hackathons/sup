@@ -1,15 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { State } from '../store/store';
-import { pushDummyUser } from '../store/actions/UsersActions';
+import { fetchUsers } from '../store/actions/UsersActions';
 import { User } from '../store/reducers/UsersReducer';
 
 interface Props {
   users: User[];
-  pushDummyUser(): void;
+  fetchUsers(): void;
 }
 
 class UserListView extends React.PureComponent<Props> {
+  componentDidMount() {
+    this.props.fetchUsers();
+  }
+
   renderUser(user: User) {
     return (
       <div>
@@ -21,7 +25,6 @@ class UserListView extends React.PureComponent<Props> {
     return (
       <>
         <h1>User list</h1>
-        <button onClick={this.props.pushDummyUser}>Add user</button>
         {this.props.users.map(this.renderUser)}
       </>
     );
@@ -35,7 +38,7 @@ function mapStateToProps(state: State) {
 }
 
 const mapDispatchToProps = {
-  pushDummyUser,
+  fetchUsers,
 };
 
 export const UserListContainer = connect(

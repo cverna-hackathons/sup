@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { PUSH_DUMMY_USER } from '../actions';
+import { LOAD_USERS } from '../actions';
 
 export interface User {
   id: number;
@@ -21,10 +21,10 @@ export function UsersReducer(
   action: AnyAction,
 ): UsersState {
   switch (action.type) {
-    case PUSH_DUMMY_USER:
+    case LOAD_USERS:
       return {
         ...state,
-        data: [...state.data, action.payload as User],
+        data: [...(action.payload as User[])],
       };
     default:
       return state;

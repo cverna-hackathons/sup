@@ -1,13 +1,13 @@
-import { PUSH_DUMMY_USER } from './index';
+import { Dispatch } from 'redux';
+import { LOAD_USERS } from './index';
+import { Fetcher } from '../Fetcher';
 
-export function pushDummyUser() {
-  return {
-    type: PUSH_DUMMY_USER,
-    payload: {
-      id: '1',
-      first_name: 'Dano',
-      last_name: 'drevo',
-      email: 'dano@drevo.sk',
-    },
+export function fetchUsers() {
+  return async (dispatch: Dispatch) => {
+    const { data } = (await Fetcher.get('/users')) as any;
+    dispatch({
+      type: LOAD_USERS,
+      payload: data.users,
+    });
   };
 }
