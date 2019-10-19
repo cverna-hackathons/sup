@@ -2,9 +2,11 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { reducers } from './reducers';
 import { ImagesState } from './reducers/ImagesReducer';
+import { LocaleState } from './reducers/LocaleReducer';
 
 export interface State {
   images: ImagesState;
+  locale: LocaleState;
 }
 
 // @ts-ignore

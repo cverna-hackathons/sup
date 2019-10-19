@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
 import { State } from '../store/store';
 import { fetchImages } from '../store/actions/ImagesActions';
 import { Image } from '../store/reducers/ImagesReducer';
@@ -24,7 +25,9 @@ class ImagesListContainerView extends React.PureComponent<Props> {
   render() {
     return (
       <>
-        <h1>Images</h1>
+        <h1>
+          <FormattedMessage id="imagesHeadline" />
+        </h1>
         {this.props.images.map(this.renderImage)}
       </>
     );
