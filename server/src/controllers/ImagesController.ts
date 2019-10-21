@@ -21,12 +21,11 @@ export class ImagesController {
   }
   @Post('/', [ ImageUploadMiddleware ])
   async create(
-    @Request() req: ExpressRequest,
+    @Request() _req: ExpressRequest,
     @Response() res: ExpressResponse    
   ) {
     const image = new Image();
 
-    console.log('req', req.files);
     image.filePath = `/new-image-path/image-${Date.now()}.png`;
     await getRepository(Image).save(image);
 
