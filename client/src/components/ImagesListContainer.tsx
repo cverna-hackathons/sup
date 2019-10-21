@@ -18,7 +18,7 @@ class ImagesListContainerView extends React.PureComponent<Props> {
   renderImage(image: Image) {
     return (
       <div>
-        {image.id} - {image.filePath} - {image.name} - {image.type}
+        {image.id} - {image.filePath} - {image.fileName} - {image.type}
       </div>
     );
   }
