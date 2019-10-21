@@ -38,6 +38,7 @@ export class ImagesController {
   ) {
     const image = await getRepository(Image).findOne(id);
     let removed = false
+
     if (image) {
       await image.remove();
       removed = true;
