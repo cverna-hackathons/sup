@@ -3,7 +3,7 @@ import { LOAD_IMAGES } from '../actions';
 
 export interface Image {
   id: number;
-  name: string;
+  fileName: string;
   type: string;
   filePath: string;
 }

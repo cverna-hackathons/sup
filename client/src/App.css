@@ -15,7 +15,8 @@ nav {
   font-size: 16px;
 }
 
-a {
+nav > a,
+select {
   text-decoration: none;
   color: black;
   margin-left: 10px;
