@@ -1,0 +1,11 @@
+entity: ImageType
+items:
+  imageType0:
+    extension: png
+    mimeType: image/png
+  imageType1:
+    extension: jpg
+    mimeType: image/jpeg
+  imageType2:
+    extension: gif
+    mimeType: image/gif

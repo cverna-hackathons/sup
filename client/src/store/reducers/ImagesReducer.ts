@@ -1,11 +1,14 @@
 import { AnyAction } from 'redux';
-import { LOAD_IMAGES } from '../actions';
+import {
+  LOAD_IMAGES,
+  UPLOAD_IMAGE
+} from '../actions';
 
 export interface Image {
   id: number;
   fileName: string;
   type: string;
-  filePath: string;
+  src: string;
 }
 
 export interface ImagesState {
@@ -21,6 +24,10 @@ export function ImagesReducer(
   action: AnyAction,
 ): ImagesState {
   switch (action.type) {
+    case UPLOAD_IMAGE:
+      return {
+        ...state
+      }
     case LOAD_IMAGES:
       return {
         ...state,

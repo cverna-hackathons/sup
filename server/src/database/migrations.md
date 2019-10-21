@@ -1,19 +1,24 @@
 ### Create new (empty) migration
 ```
-ts-node ./node_modules/.bin/typeorm migration:create -n Users
+npm run db:migration:create -- -n Users
 ```
 
 ### Generate new migration
 ```
-ts-node ./node_modules/.bin/typeorm migration:generate -n Users
+npm run db:migration:generate -- -n Users
 ```
 
 ### Run migrations
 ```
-ts-node ./node_modules/.bin/typeorm migration:run
+npm run db:migration:run
 ```
 
 ### Revert last migration
 ```
-ts-node ./node_modules/.bin/typeorm migration:revert
+npm run db:migration:revert
+```
+
+### Load fixtures
+```
+npm run db:fixtures:load
 ```

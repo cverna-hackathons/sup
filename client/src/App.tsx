@@ -9,6 +9,7 @@ import {
 import { Provider } from 'react-redux';
 import './App.css';
 import { ImagesListContainer } from './components/ImagesListContainer';
+import { ImageUploadContainer } from './components/ImageUploadContainer';
 import { createReduxStore } from './store/store';
 import { I18n } from './I18n';
 import { FormattedMessage } from 'react-intl';
@@ -36,7 +37,8 @@ const App: React.FC = () => {
                     renders the first one that matches the current URL. */}
               <Switch>
                 <Route path="/images">
-                  <ImagesListContainer />
+                  <ImageUploadContainer />
+                  <ImagesListContainer />                  
                 </Route>
                 <Route path="/" exact>
                   <h1>
