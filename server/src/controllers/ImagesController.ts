@@ -7,6 +7,7 @@ import {
   Response as ExpressResponse,
   Request as ExpressRequest
 } from 'express';
+import { ImageUploadMiddleware } from '../http/ImageUploadMiddleware';
 
 @Controller('/images')
 export class ImagesController {
@@ -18,13 +19,14 @@ export class ImagesController {
 
     res.send({ images: records });
   }
-  @Post('/')
+  @Post('/', [ ImageUploadMiddleware ])
   async create(
-    @Request() _req: ExpressRequest,
-    @Response() res: ExpressResponse
+    @Request() req: ExpressRequest,
+    @Response() res: ExpressResponse    
   ) {
     const image = new Image();
 
+    console.log('req', req.files);
     image.filePath = `/new-image-path/image-${Date.now()}.png`;
     await getRepository(Image).save(image);
 
