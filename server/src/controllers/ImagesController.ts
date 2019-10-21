@@ -22,7 +22,7 @@ export class ImagesController {
   @Post('/', [ ImageUploadMiddleware ])
   async create(
     @Request() _req: ExpressRequest,
-    @Response() res: ExpressResponse    
+    @Response() res: ExpressResponse
   ) {
     const image = new Image();
 
