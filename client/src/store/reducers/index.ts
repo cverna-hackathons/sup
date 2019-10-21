@@ -1,5 +1,5 @@
-import { UsersReducer } from './UsersReducer';
+import { ImagesReducer } from './ImagesReducer';
 
 export const reducers = {
-  users: UsersReducer,
+  images: ImagesReducer,
 };

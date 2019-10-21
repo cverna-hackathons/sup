@@ -8,7 +8,7 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './App.css';
-import { UserListContainer } from './components/UserListContainer';
+import { ImagesListContainer } from './components/ImagesListContainer';
 import { createReduxStore } from './store/store';
 
 const App: React.FC = () => {
@@ -29,7 +29,7 @@ const App: React.FC = () => {
                     renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/test">
-                <UserListContainer />
+                <ImagesListContainer />
               </Route>
               <Route path="/" exact>
                 <h1>Welcome!</h1>
