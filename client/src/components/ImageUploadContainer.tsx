@@ -17,7 +17,6 @@ class ImageUploadContainerView extends React.PureComponent<Props, State> {
     this.state = { image: null };
   }
   triggerUpload(event: React.MouseEvent) {
-    console.log('triggerUpload', event);
     if (this.state.image) {
       this.props.uploadImage(this.state.image);
     }

@@ -37,6 +37,6 @@ const loadFixtures = async () => {
 
 loadFixtures()
   .then(() => {
-    console.info('Fixtures are successfully loaded.');
+    console.info('Fixtures were successfully loaded.');
   })
   .catch(err => console.log(err));

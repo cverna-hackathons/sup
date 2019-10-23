@@ -43,7 +43,6 @@ export class ImagesController {
     let success = false;
 
     if (req.file && imageType) {
-      console.info('image', req.file, imageType);
       image.filePath = `${req.file.path}`;
       image.imageType = imageType;
       await getRepository(Image).save(image);
