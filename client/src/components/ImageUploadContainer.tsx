@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { uploadImage } from '../store/actions/ImagesActions';
+import { uploadImage, fetchImages } from '../store/actions/ImagesActions';
 
 interface State {
   image: File | null;
 }
 
 interface Props {
-  uploadImage(image: File): void;
+  uploadImage(image: File): Promise<void>;
+  fetchImages(): Promise<void>;
 }
 
 class ImageUploadContainerView extends React.PureComponent<Props, State> {
@@ -18,7 +19,9 @@ class ImageUploadContainerView extends React.PureComponent<Props, State> {
   }
   triggerUpload(event: React.MouseEvent) {
     if (this.state.image) {
-      this.props.uploadImage(this.state.image);
+      this.props
+        .uploadImage(this.state.image)
+        .then(() => this.props.fetchImages());
     }
   }
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -53,6 +56,7 @@ function mapStateToProps(state: State) {
 
 const mapDispatchToProps = {
   uploadImage,
+  fetchImages,
 };
 
 export const ImageUploadContainer = connect(

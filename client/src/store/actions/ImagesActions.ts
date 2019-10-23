@@ -12,6 +12,7 @@ export function uploadImage(image: File) {
       type: UPLOAD_IMAGE,
       payload: response,
     });
+    console.log('fetch imgs now');
   };
 }
 
