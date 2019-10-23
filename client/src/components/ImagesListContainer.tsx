@@ -19,6 +19,9 @@ class ImagesListContainerView extends React.PureComponent<Props> {
     return (
       <div key={image.id}>
         {image.id} - {image.src} - {image.fileName} - {image.type}
+        <p>
+          <img src={image.src} alt={`${image.id} - ${image.fileName}`} />
+        </p>
       </div>
     );
   }

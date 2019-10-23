@@ -63,3 +63,6 @@ typings/
 
 # code workspace file
 *.code-workspace
+
+# default images static storage
+tmp/

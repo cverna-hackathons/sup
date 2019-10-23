@@ -21,14 +21,20 @@ export class ImagesController {
     });
 
     res.send({
-      images: records.map(({ id, imageType, fileName, filePath, src }) => ({
+      images: records.map(({
+        id,
+        imageType,
+        fileName,
+        filePath,
+        src,
+      }) => ({
         extension: imageType.extension,
         fileName,
         filePath,
         id,
         type: imageType.mimeType,
         src,
-      }))
+      })).sort((a, b) => b.id - a.id)
     });
   }
   @Post('/', [ ImageUploadMiddleware ])

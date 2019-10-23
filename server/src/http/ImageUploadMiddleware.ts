@@ -15,7 +15,9 @@ export class ImageUploadMiddleware implements Middleware {
   private upload: any;
   constructor() {
     debug('setting up');
-    this.upload = Multer({ dest: '/tmp/' });
+    this.upload = Multer({
+      dest: process.env.IMAGES_STATIC_DIR || '/tmp'
+    });
   }
   public use(req: Request, res: Response, next: NextFunction): void {
     debug('applying');

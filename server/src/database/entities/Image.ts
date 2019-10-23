@@ -30,7 +30,7 @@ export class Image extends BaseEntity {
 
   get src(): string {
     return (
-      `http://localhost:${process.env.NODE_PORT}/images/${this.id}/${this.fileName}`
+      `http://localhost:${process.env.NODE_PORT}/images/${this.fileName}`
     )
   }
   
