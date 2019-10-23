@@ -25,7 +25,7 @@ class ImageUploadContainerView extends React.PureComponent<Props, State> {
   handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files[0]) {
       this.setState({
-        image: event.target.files[0]
+        image: event.target.files[0],
       });
     }
   }
@@ -35,8 +35,12 @@ class ImageUploadContainerView extends React.PureComponent<Props, State> {
         <h2>
           <FormattedMessage id="imagesUploadLabel" />
         </h2>
-        <input accept="image/*" type="file" onChange={(e) => this.handleChange(e)} />
-        <button onClick={(e) => this.triggerUpload(e)}>
+        <input
+          accept="image/*"
+          type="file"
+          onChange={e => this.handleChange(e)}
+        />
+        <button onClick={e => this.triggerUpload(e)}>
           <FormattedMessage id="imagesUploadLabel" />
         </button>
       </>

@@ -1,8 +1,5 @@
 import { AnyAction } from 'redux';
-import {
-  LOAD_IMAGES,
-  UPLOAD_IMAGE
-} from '../actions';
+import { LOAD_IMAGES, UPLOAD_IMAGE } from '../actions';
 
 export interface Image {
   id: number;
@@ -26,8 +23,8 @@ export function ImagesReducer(
   switch (action.type) {
     case UPLOAD_IMAGE:
       return {
-        ...state
-      }
+        ...state,
+      };
     case LOAD_IMAGES:
       return {
         ...state,

@@ -1,8 +1,5 @@
 import { Dispatch } from 'redux';
-import {
-  LOAD_IMAGES,
-  UPLOAD_IMAGE
-} from './index';
+import { LOAD_IMAGES, UPLOAD_IMAGE } from './index';
 import { Fetcher } from '../Fetcher';
 
 export function uploadImage(image: File) {
