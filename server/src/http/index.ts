@@ -21,7 +21,7 @@ export function start(): express.Application {
   app.use(corsMiddleware);
   app.options('*', corsMiddleware);
   route(app).listen(NODE_PORT);
-  debug(`Server listening on: ${NODE_HOST}:${NODE_PORT}`)
+  debug(`Server listening on: ${NODE_HOST}:${NODE_PORT}`);
 
   return app;
 }
