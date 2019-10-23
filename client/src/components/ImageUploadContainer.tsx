@@ -42,7 +42,10 @@ class ImageUploadContainerView extends React.PureComponent<Props, State> {
           type="file"
           onChange={e => this.handleChange(e)}
         />
-        <button onClick={e => this.triggerUpload(e)}>
+        <button
+          onClick={e => this.triggerUpload(e)}
+          disabled={!this.state.image}
+        >
           <FormattedMessage id="imagesUploadLabel" />
         </button>
       </>
