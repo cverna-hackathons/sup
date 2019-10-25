@@ -1,19 +1,20 @@
-import { getRepository } from 'typeorm';
-import { Image } from '../database/entities/Image';
-import { ImageType } from '../database/entities/ImageType';
 import {
-  Response, Controller, Get, Post, Request, Delete, Params
+  Controller, Delete, Get, Params, Post, Request, Response
 } from '@decorators/express';
 import {
-  Response as ExpressResponse,
-  Request as ExpressRequest
+  Request as ExpressRequest,
+  Response as ExpressResponse
 } from 'express';
+import { getRepository } from 'typeorm';
+import { getImageFeatures } from '../analyzers/ImageColorAnalyzer';
+import { Image } from '../database/entities/Image';
+import { ImageType } from '../database/entities/ImageType';
 import { ImageUploadMiddleware } from '../http/ImageUploadMiddleware';
 
 @Controller('/images')
 export class ImagesController {
   @Get('/')
-  async list(
+  public async list(
     @Response() res: ExpressResponse
   ) {
     const records = await getRepository(Image).find({
@@ -21,7 +22,7 @@ export class ImagesController {
     });
 
     res.send({
-      images: records.map(({
+      images: await Promise.all(records.map(async ({
         id,
         imageType,
         fileName,
@@ -29,16 +30,17 @@ export class ImagesController {
         src,
       }) => ({
         extension: imageType.extension,
+        features: await getImageFeatures(filePath),
         fileName,
         filePath,
         id,
-        type: imageType.mimeType,
         src,
-      })).sort((a, b) => b.id - a.id)
+        type: imageType.mimeType,
+      })))
     });
   }
   @Post('/', [ ImageUploadMiddleware ])
-  async create(
+  public async create(
     @Request() req: ExpressRequest,
     @Response() res: ExpressResponse
   ) {
@@ -61,7 +63,7 @@ export class ImagesController {
     });
   }
   @Delete('/:id')
-  async remove(
+  public async remove(
     @Response() res: ExpressResponse,
     @Params('id') id: string,
   ) {

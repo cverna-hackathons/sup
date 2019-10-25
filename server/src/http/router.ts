@@ -1,3 +1,4 @@
+import { attachControllers } from '@decorators/express';
 import {
   Application,
   Router,
@@ -6,7 +7,6 @@ import 'express-async-errors';
 import { BaseController } from '../controllers/BaseController';
 import { ImagesController } from '../controllers/ImagesController';
 import { handle } from './ErrorHandler';
-import { attachControllers } from '@decorators/express';
 
 export const route = (app: Application) => {
   const apiRouter = Router();
