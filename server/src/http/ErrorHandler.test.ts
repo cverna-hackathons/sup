@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 import { handle } from './ErrorHandler';
 import { RequestError } from './RequestError';
 
-const testErrorMessage = 'Test error'
-const testErrorCode = 500
+const testErrorMessage = 'Test error';
+const testErrorCode = 500;
 
 test('Should throw on throw route', () => {
   let response: any;

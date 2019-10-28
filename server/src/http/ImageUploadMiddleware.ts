@@ -1,13 +1,13 @@
 import {
   Middleware
 } from '@decorators/express';
+import * as Debug from 'debug';
 import {
-  Response,
+  NextFunction,
   Request,
-  NextFunction
+  Response,
 } from 'express';
 import * as Multer from 'multer';
-import * as Debug from 'debug';
 
 const debug = Debug('sup:ImageUploaderMiddleware');
 

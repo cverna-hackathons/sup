@@ -14,11 +14,10 @@ interface Props {
 
 class ImageUploadContainerView extends React.PureComponent<Props, State> {
   state: State = { image: null };
-  triggerUpload = (event: React.MouseEvent) => {
+  triggerUpload = async () => {
     if (this.state.image) {
-      this.props
-        .uploadImage(this.state.image)
-        .then(() => this.props.fetchImages());
+      await this.props.uploadImage(this.state.image);
+      await this.props.fetchImages();
     }
   };
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,16 +42,12 @@ class ImageUploadContainerView extends React.PureComponent<Props, State> {
   }
 }
 
-function mapStateToProps(state: State) {
-  return {};
-}
-
 const mapDispatchToProps = {
   uploadImage,
   fetchImages,
 };
 
 export const ImageUploadContainer = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 )(ImageUploadContainerView);
