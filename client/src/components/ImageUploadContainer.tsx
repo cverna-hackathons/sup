@@ -13,39 +13,29 @@ interface Props {
 }
 
 class ImageUploadContainerView extends React.PureComponent<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { image: null };
-  }
-  triggerUpload(event: React.MouseEvent) {
+  state: State = { image: null };
+  triggerUpload = (event: React.MouseEvent) => {
     if (this.state.image) {
       this.props
         .uploadImage(this.state.image)
         .then(() => this.props.fetchImages());
     }
-  }
-  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  };
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       this.setState({
         image: event.target.files[0],
       });
     }
-  }
+  };
   render() {
     return (
       <>
         <h2>
           <FormattedMessage id="imagesUploadLabel" />
         </h2>
-        <input
-          accept="image/*"
-          type="file"
-          onChange={e => this.handleChange(e)}
-        />
-        <button
-          onClick={e => this.triggerUpload(e)}
-          disabled={!this.state.image}
-        >
+        <input accept="image/*" type="file" onChange={this.handleChange} />
+        <button onClick={this.triggerUpload} disabled={!this.state.image}>
           <FormattedMessage id="imagesUploadLabel" />
         </button>
       </>
