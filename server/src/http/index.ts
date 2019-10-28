@@ -17,11 +17,17 @@ export function start(): express.Application {
   
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
+  app.use(
+    '/images',
+    express.static(
+      process.env.IMAGES_STATIC_DIR || '/tmp'
+    )
+  );
   app.use(logger('dev'));
   app.use(corsMiddleware);
   app.options('*', corsMiddleware);
   route(app).listen(NODE_PORT);
-  debug(`Server listening on: ${NODE_HOST}:${NODE_PORT}`)
+  debug(`Server listening on: ${NODE_HOST}:${NODE_PORT}`);
 
   return app;
 }

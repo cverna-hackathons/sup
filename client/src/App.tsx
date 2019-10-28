@@ -9,6 +9,7 @@ import {
 import { Provider } from 'react-redux';
 import './App.css';
 import { ImagesListContainer } from './components/ImagesListContainer';
+import { ImageUploadContainer } from './components/ImageUploadContainer';
 import { createReduxStore } from './store/store';
 import { I18n } from './I18n';
 import { FormattedMessage } from 'react-intl';
@@ -25,7 +26,7 @@ const App: React.FC = () => {
                 <Link to="/">
                   <FormattedMessage id="welcomeHeadline" />
                 </Link>
-                <NavLink to="/test" activeClassName="active">
+                <NavLink to="/images" activeClassName="active">
                   <FormattedMessage id="imagesHeadline" />
                 </NavLink>
                 <LocaleSwitch />
@@ -35,7 +36,8 @@ const App: React.FC = () => {
               {/* A <Switch> looks through its children <Route>s and
                     renders the first one that matches the current URL. */}
               <Switch>
-                <Route path="/test">
+                <Route path="/images">
+                  <ImageUploadContainer />
                   <ImagesListContainer />
                 </Route>
                 <Route path="/" exact>
