@@ -18,7 +18,7 @@ export class ImagesController {
     @Response() res: ExpressResponse
   ) {
     const records = await getRepository(Image).find({
-      order: { id: "DESC" },
+      order: { id: 'DESC' },
       relations: [ 'imageType' ],
     });
 

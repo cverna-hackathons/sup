@@ -1,5 +1,5 @@
 import Debug from 'debug';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { RequestError } from './RequestError';
 
 const debug = Debug('sup:RequestError');
