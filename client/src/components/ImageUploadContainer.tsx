@@ -1,42 +1,29 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
 import { uploadImage, fetchImages } from '../store/actions/ImagesActions';
-
-interface State {
-  image: File | null;
-}
+import { FileInput } from '../design-system/components/file-input/FileInput';
 
 interface Props {
   uploadImage(image: File): Promise<void>;
   fetchImages(): Promise<void>;
 }
 
-class ImageUploadContainerView extends React.PureComponent<Props, State> {
-  state: State = { image: null };
-  triggerUpload = async () => {
-    if (this.state.image) {
-      await this.props.uploadImage(this.state.image);
+class ImageUploadContainerView extends React.PureComponent<Props> {
+  triggerUpload = async (image: File) => {
+      await this.props.uploadImage(image);
       await this.props.fetchImages();
-    }
   };
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      this.setState({
-        image: event.target.files[0],
-      });
-    }
-  };
+
   render() {
     return (
       <>
-        <h2>
-          <FormattedMessage id="imagesUploadLabel" />
-        </h2>
-        <input accept="image/*" type="file" onChange={this.handleChange} />
-        <button onClick={this.triggerUpload} disabled={!this.state.image}>
-          <FormattedMessage id="imagesUploadLabel" />
-        </button>
+        <FileInput
+          onSelect={this.triggerUpload}
+          primaryText="Drag and drop file"
+          secondaryText="We will do some nice magic analysis on dropped picture, all data are anonymous and we will not provide them to third parties"
+          inputText=" or choose a file"
+          confirmBtnText="Confirm selection of "
+        />
       </>
     );
   }

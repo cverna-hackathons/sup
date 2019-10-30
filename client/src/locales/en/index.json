@@ -1,5 +1,6 @@
 {
-  "welcomeHeadline": "Welcome",
   "imagesHeadline": "Images",
-  "imagesUploadLabel": "Upload image"
+  "imagesUploadLabel": "Upload image",
+  "aboutUsHeadline": "About us"
+
 }
