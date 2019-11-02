@@ -10,7 +10,8 @@ body {
   background-color: $color-bg;
 }
 
-a, a:active {
+a,
+a:active {
   color: $color-primary;
   text-decoration: none;
 }

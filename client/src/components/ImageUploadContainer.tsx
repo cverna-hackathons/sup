@@ -10,8 +10,8 @@ interface Props {
 
 class ImageUploadContainerView extends React.PureComponent<Props> {
   triggerUpload = async (image: File) => {
-      await this.props.uploadImage(image);
-      await this.props.fetchImages();
+    await this.props.uploadImage(image);
+    await this.props.fetchImages();
   };
 
   render() {

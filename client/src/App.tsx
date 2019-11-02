@@ -45,7 +45,6 @@ const App: React.FC = () => {
                 <Route path="/" exact>
                   <ImageUploadContainer />
                   <ImagesListContainer />
-
                 </Route>
               </Switch>
             </div>
