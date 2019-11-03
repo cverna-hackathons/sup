@@ -1,0 +1,35 @@
+@import './variables.scss';
+@import './mixins/create-font-face.scss';
+
+@include create-font-face($main-font-name, $main-font-path);
+@include create-font-face($secondary-font-name, $secondary-font-path);
+
+body {
+  font-family: '#{$main-font-name}';
+  color: $color-primary;
+  background-color: $color-bg;
+}
+
+a,
+a:active {
+  color: $color-primary;
+  text-decoration: none;
+}
+
+button {
+  border-radius: 0;
+  border: 1px solid $color-primary;
+  color: $color-primary;
+  font-size: 12px;
+  padding: 10px 10px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: $color-primary;
+    color: $color-bg;
+  }
+}

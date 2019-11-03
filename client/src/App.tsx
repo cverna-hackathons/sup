@@ -7,6 +7,7 @@ import {
   Link,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import './design-system/styles/global.scss';
 import './App.css';
 import { ImagesListContainer } from './components/ImagesListContainer';
 import { ImageUploadContainer } from './components/ImageUploadContainer';
@@ -22,12 +23,12 @@ const App: React.FC = () => {
         <Router>
           <div className="wrapper">
             <header>
+              <Link to="/" className="brand-link">
+                SUP
+              </Link>
               <nav>
-                <Link to="/">
-                  <FormattedMessage id="welcomeHeadline" />
-                </Link>
-                <NavLink to="/images" activeClassName="active">
-                  <FormattedMessage id="imagesHeadline" />
+                <NavLink to="/about-us" activeClassName="active">
+                  <FormattedMessage id="aboutUsHeadline" />
                 </NavLink>
                 <LocaleSwitch />
               </nav>
@@ -36,14 +37,14 @@ const App: React.FC = () => {
               {/* A <Switch> looks through its children <Route>s and
                     renders the first one that matches the current URL. */}
               <Switch>
-                <Route path="/images">
-                  <ImageUploadContainer />
-                  <ImagesListContainer />
+                <Route path="/about-us">
+                  <h1>
+                    <FormattedMessage id="aboutUsHeadline" />
+                  </h1>
                 </Route>
                 <Route path="/" exact>
-                  <h1>
-                    <FormattedMessage id="welcomeHeadline" />
-                  </h1>
+                  <ImageUploadContainer />
+                  <ImagesListContainer />
                 </Route>
               </Switch>
             </div>

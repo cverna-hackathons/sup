@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { changeLocale } from '../store/actions/LocaleActions';
-import { Select } from '../design-system/select/Select';
+import { Select } from '../design-system/components/select/Select';
 
 interface DispatchProps {
   changeLocale(newLocale: string): void;

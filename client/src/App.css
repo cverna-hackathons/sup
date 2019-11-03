@@ -4,6 +4,10 @@
   position: relative;
 }
 
+.content {
+  padding-top: 20px;
+}
+
 header {
   height: 40px;
   border-bottom: 1px solid grey;
@@ -18,10 +22,16 @@ nav {
 nav > a,
 select {
   text-decoration: none;
-  color: black;
   margin-left: 10px;
 }
 
 .active {
   font-weight: bold;
+}
+
+.brand-link {
+  display: inline-block;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
 }

@@ -1,0 +1,22 @@
+@mixin create-font-face($name, $path) {
+  @font-face {
+    font-family: '#{$name}';
+    src: url('#{$path}/#{$name}-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: '#{$name}';
+    src: url('#{$path}/#{$name}-Bold.ttf') format('truetype');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: '#{$name}';
+    src: url('#{$path}/#{$name}-Italic.ttf') format('truetype');
+    font-style: italic, oblique;
+  }
+  @font-face {
+    font-family: '#{$name}';
+    src: url('#{$path}/#{$name}-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic, oblique;
+  }
+}
