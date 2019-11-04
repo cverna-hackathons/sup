@@ -1,3 +1,4 @@
+import * as AWS from 'aws-sdk';
 import {
   Middleware
 } from '@decorators/express';
@@ -8,6 +9,7 @@ import {
   Response,
 } from 'express';
 import * as Multer from 'multer';
+import * as MulterS3 from 'multer-s3';
 
 const debug = Debug('sup:ImageUploaderMiddleware');
 
