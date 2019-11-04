@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { ImageType } from './ImageType';
+import { ImageStorageEnum } from './ImageStorageEnum'
 
 @Entity('images')
 export class Image extends BaseEntity {
@@ -21,6 +22,13 @@ export class Image extends BaseEntity {
   })
   @IsString()
   public filePath!: string;
+
+  @Column({
+    type: 'enum',
+    enum: ImageStorageEnum,
+    default: [ ImageStorageEnum.LOCAL ]
+  })
+  public storage!: ImageStorageEnum;
 
   get fileName(): string {
     const [ fname ] = this.filePath.split('/').reverse()

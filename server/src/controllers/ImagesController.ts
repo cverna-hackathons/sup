@@ -10,6 +10,9 @@ import { getImageFeatures } from '../analyzers/ImageColorAnalyzer';
 import { Image } from '../database/entities/Image';
 import { ImageType } from '../database/entities/ImageType';
 import { ImageUploadMiddleware } from '../http/ImageUploadMiddleware';
+import * as Debugger from 'debug';
+
+const debug = Debugger('sup:ImagesController');
 
 @Controller('/images')
 export class ImagesController {
@@ -52,6 +55,7 @@ export class ImagesController {
     let success = false;
 
     if (req.file && imageType) {
+      debug(`req.file`, req.file);
       image.filePath = `${req.file.path}`;
       image.imageType = imageType;
       await getRepository(Image).save(image);
