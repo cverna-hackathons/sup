@@ -6,14 +6,14 @@ import * as express from 'express';
 import * as logger from 'morgan';
 import { route } from './router';
 
-const debug = Debugger('sup:http')
-
 dotenv.config();
+
+const debug = Debugger('sup:http')
+const { NODE_PORT = 4000, NODE_HOST } = process.env
 
 export function start(): express.Application {
   const app: express.Application = express();
   const corsMiddleware = cors({ origin: '*', preflightContinue: true });
-  const { NODE_PORT = 4000, NODE_HOST } = process.env
   
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());

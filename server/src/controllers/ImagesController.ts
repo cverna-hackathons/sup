@@ -1,6 +1,7 @@
 import {
   Controller, Delete, Get, Params, Post, Request, Response
 } from '@decorators/express';
+import * as Debugger from 'debug';
 import {
   Request as ExpressRequest,
   Response as ExpressResponse
@@ -10,6 +11,10 @@ import { getImageFeatures } from '../analyzers/ImageColorAnalyzer';
 import { Image } from '../database/entities/Image';
 import { ImageType } from '../database/entities/ImageType';
 import { ImageUploadMiddleware } from '../http/ImageUploadMiddleware';
+import { RequestError } from '../http/RequestError';
+import { ImageStorage } from '../storage/ImageStorage';
+
+const debug = Debugger('sup:ImagesController');
 
 @Controller('/images')
 export class ImagesController {
@@ -29,9 +34,14 @@ export class ImagesController {
         fileName,
         filePath,
         src,
+        storage,
       }) => ({
         extension: imageType.extension,
-        features: await getImageFeatures(filePath),
+        features: (
+          storage === 'S3'
+            ? { noFeatures: true }
+            : await getImageFeatures(filePath)
+        ),
         fileName,
         filePath,
         id,
@@ -52,7 +62,9 @@ export class ImagesController {
     let success = false;
 
     if (req.file && imageType) {
-      image.filePath = `${req.file.path}`;
+      debug(`req.file`, req.file, Image.currentStorage);
+      image.storage = Image.currentStorage;
+      image.filePath = Image.storageFilePath(req.file);
       image.imageType = imageType;
       await getRepository(Image).save(image);
       success = true;
@@ -76,5 +88,21 @@ export class ImagesController {
       removed = true;
     }
     res.send({ success: removed });
+  }
+  @Get('/:id')
+  public async getImage(
+    @Response() res: ExpressResponse,
+    @Params('id') id: string,
+  ) {
+    const image = await getRepository(Image).findOne(id);
+
+    if (image) {
+      const storage = new ImageStorage(image);
+      debug(`getImage`, image.filePath)
+      
+      storage.getReadStream().pipe(res);
+    } else {
+      throw new RequestError(`Unable to find image [ID: ${id}]`, 400);
+    }
   }
 }

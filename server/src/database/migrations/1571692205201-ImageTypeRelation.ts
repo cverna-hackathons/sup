@@ -11,5 +11,4 @@ export class ImageTypeRelation1571692205201 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "images" DROP CONSTRAINT "FK_90e91f4ebd1039dcdf5165211ac"`, undefined);
         await queryRunner.query(`ALTER TABLE "images" DROP COLUMN "image_type_id"`, undefined);
     }
-
 }
