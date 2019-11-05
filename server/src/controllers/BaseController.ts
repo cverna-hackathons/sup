@@ -1,23 +1,21 @@
 import {
-  Response, Controller, Get, Request
+  Controller, Get, Response
 } from '@decorators/express';
-import { RequestError } from '../http/RequestError';
 import {
-  Response as ExpressResponse,
-  Request as ExpressRequest
+  Response as ExpressResponse
 } from 'express';
+import { RequestError } from '../http/RequestError';
 
 @Controller('/')
 export class BaseController {
   @Get('/ping')
-  async ping(
-    @Request() _req: ExpressRequest,
+  public async ping(
     @Response() res: ExpressResponse
   ) {
     res.send('pong');
   }
   @Get('/throw')
-  async throw() {
+  public async throw() {
     throw new RequestError('Example throw error');
   }
 }

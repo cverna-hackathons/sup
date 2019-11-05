@@ -7,11 +7,27 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
+import { ImageStorageEnum } from './ImageStorageEnum';
 import { ImageType } from './ImageType';
-import { ImageStorageEnum } from './ImageStorageEnum'
+
+interface IFileUpload {
+  path: string,
+  location: string,
+}
 
 @Entity('images')
 export class Image extends BaseEntity {
+  public static StorageEnum = ImageStorageEnum;
+  public static currentStorage: ImageStorageEnum = (
+    process.env.IMAGES_STORAGE === 'S3'
+      ? ImageStorageEnum.S3 : ImageStorageEnum.LOCAL
+  );
+  public static storageFilePath(file: IFileUpload): string {
+    return Image.currentStorage === ImageStorageEnum.S3
+      ? file.location
+      : file.path
+  };
+
   @PrimaryGeneratedColumn()
   public id!: number;
 
@@ -24,24 +40,31 @@ export class Image extends BaseEntity {
   public filePath!: string;
 
   @Column({
-    type: 'enum',
+    default: [ ImageStorageEnum.LOCAL ],
     enum: ImageStorageEnum,
-    default: [ ImageStorageEnum.LOCAL ]
+    type: 'enum',
   })
   public storage!: ImageStorageEnum;
 
   get fileName(): string {
-    const [ fname ] = this.filePath.split('/').reverse()
+    const [ fname ] = this.filePath.split('/').reverse();
 
-    return fname
+    return fname;
+  }
+
+  get storageIsS3() {
+    return (this.storage === ImageStorageEnum.S3);
   }
 
   get src(): string {
-    return (
-      `http://localhost:${process.env.NODE_PORT}/images/${this.fileName}`
-    )
+    const base = `http://localhost:${process.env.NODE_PORT}`;
+    const path = this.storage === ImageStorageEnum.S3
+      ? `/api/v1/images/${this.id}`
+      : `/images/${this.fileName}`;
+    
+    return `${base}${path}`;
   }
-  
+
   @ManyToOne(() => ImageType, (imageType: ImageType) => imageType.images)
   @JoinColumn({ name: 'image_type_id' })
   public imageType!: ImageType;
