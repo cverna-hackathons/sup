@@ -6,11 +6,22 @@ const writeFile = promisify(Fs.writeFile)
 const wait = promisify(setTimeout)
 const requestResourceTypes = [ 'image', 'document' ]
 const imageSrcWhitelist = 'images.saatchiart.com'
-const targetFilePath = fileName => `/tmp/target/${fileName}`
 const imageFileNameFromUrl = url => url.split('/').pop()
+const [ _runtime, _file, CATEGORY = 'drawings' ] = process.argv
+const topDir = `/tmp/target`;
+const targetDir = `${topDir}/${CATEGORY}`
+const targetFilePath = fileName => `${targetDir}/${fileName}`
 const main = async () => {
   const browser = await puppeteer.launch()
-  let nextPageHref = 'https://www.saatchiart.com/drawings'
+  let nextPageHref = `https://www.saatchiart.com/${CATEGORY}`
+
+  if (!Fs.existsSync(topDir)) {
+    Fs.mkdirSync(topDir)
+  }
+
+  if (!Fs.existsSync(targetDir)) {
+    Fs.mkdirSync(targetDir)
+  }
 
   while (nextPageHref) {
     let page = await getImagesFromUrl({
