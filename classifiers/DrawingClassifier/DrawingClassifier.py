@@ -34,8 +34,8 @@ batch_size = 32,
 class_mode = 'binary')
 
 classifier.fit_generator(training_set,
-steps_per_epoch = 8000,
-epochs = 25,
+steps_per_epoch = 100,
+epochs = 2,
 validation_data = test_set,
 validation_steps = 2000)
 
@@ -44,9 +44,12 @@ test_image = image.img_to_array(test_image)
 test_image = np.expand_dims(test_image, axis = 0)
 result = classifier.predict(test_image)
 training_set.class_indices
+
 if result[0][0] == 1:
   prediction = 'drawing'
 else:
   prediction = 'sculpture'
 
 print('result', result)
+
+classifier.save('/tmp/DrawingClassifier.h5')
