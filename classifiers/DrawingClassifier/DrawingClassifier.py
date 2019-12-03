@@ -34,10 +34,10 @@ batch_size = 32,
 class_mode = 'binary')
 
 classifier.fit_generator(training_set,
-steps_per_epoch = 100,
-epochs = 2,
+steps_per_epoch = 250,
+epochs = 20,
 validation_data = test_set,
-validation_steps = 2000)
+validation_steps = 250)
 
 test_image = image.load_img('/tmp/target/sculpture/4861677-BKCPJFPJ-6.jpg', target_size = (64, 64))
 test_image = image.img_to_array(test_image)
