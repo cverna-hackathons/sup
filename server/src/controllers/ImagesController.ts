@@ -10,8 +10,8 @@ import { getRepository } from 'typeorm';
 import { getImageFeatures } from '../analyzers/ImageColorAnalyzer';
 import { Image } from '../database/entities/Image';
 import { ImageType } from '../database/entities/ImageType';
-import { ImageUploadMiddleware } from '../http/ImageUploadMiddleware';
 import { RequestError } from '../http/RequestError';
+import { ImageUploadMiddleware } from '../imageUploads/ImageUploadMiddleware';
 import { ImageStorage } from '../storage/ImageStorage';
 
 const debug = Debugger('sup:ImagesController');

@@ -65,6 +65,15 @@ export class Image extends BaseEntity {
     return `${base}${path}`;
   }
 
+  get thumbnailSrc(): string {
+    const base = `http://localhost:${process.env.NODE_PORT}`;
+    const path = this.storage === ImageStorageEnum.S3
+      ? `/api/v1/images/thumbnail-${this.id}`
+      : `/images/thumbnail-${this.fileName}`;
+    
+    return `${base}${path}`;
+  }
+
   @ManyToOne(() => ImageType, (imageType: ImageType) => imageType.images)
   @JoinColumn({ name: 'image_type_id' })
   public imageType!: ImageType;
