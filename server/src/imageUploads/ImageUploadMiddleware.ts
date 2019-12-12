@@ -26,6 +26,7 @@ export class ImageUploadMiddleware implements Middleware {
   }
   public use(req: Request, res: Response, next: NextFunction): void {
     debug('applying');
+
     return this.upload.single('image')(req, res, next);
   }
 }

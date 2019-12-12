@@ -1,7 +1,10 @@
 import * as AWS from 'aws-sdk';
+import * as Debug from 'debug';
 import * as Multer from 'multer';
 import * as MulterS3 from 'multer-s3';
 import * as UniqueId from 'uniqid';
+
+const debug = Debug('sup:s3imageUpload')
 
 export const S3ImageUpload = Multer({
   storage: MulterS3({
@@ -11,6 +14,7 @@ export const S3ImageUpload = Multer({
       secretAccessKey: process.env.aws_secret_access_key,
     }),
     key(_, __, done) {
+      debug('key!')
       return done(null, UniqueId());
     }
   })
