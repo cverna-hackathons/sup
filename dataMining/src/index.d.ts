@@ -1,3 +1,8 @@
+export enum Unit {
+    in,
+    cm,
+}
+
 export interface Author {
     name: string;
     followers?: number;
@@ -9,7 +14,7 @@ export interface Author {
 export interface Size {
     width: number;
     height: number;
-    unit: "in" | "cm"
+    unit: Unit;
 }
 
 export interface Entry {
