@@ -1,0 +1,28 @@
+{
+  "name": "datamining",
+  "version": "1.0.0",
+  "description": "Data mining module of sup",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest",
+    "db:fixtures:load": "ts-node src/database/fixtures/load.ts",
+    "db:migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
+    "db:migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",
+    "db:migration:run": "ts-node ./node_modules/.bin/typeorm migration:run",
+    "db:migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-ts": "^5.0.3",
+    "pg": "^7.15.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.24",
+    "@types/node": "^12.12.21",
+    "jest": "^24.9.0"
+  }
+}
