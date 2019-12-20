@@ -1,0 +1,20 @@
+{
+  "name": "sup_data_collection",
+  "version": "0.0.1",
+  "description": "Spolocna Umelecka Dielna",
+  "main": "package.json",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cverna-hackathons/sup.git"
+  },
+  "author": "pejrak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cverna-hackathons/sup/issues"
+  },
+  "homepage": "https://github.com/cverna-hackathons/sup#readme",
+  "dependencies": {
+    "puppeteer": "^2.0.0"
+  }
+}
