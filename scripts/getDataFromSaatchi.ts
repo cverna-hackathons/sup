@@ -13,9 +13,9 @@ async function main(): Promise<void> {
 
   while(shouldContinue) {
     const url: string = `https://www.saatchiart.com/account/artworks/${nextId}`
-    const data = await getDataFromUrl(url, browser);
-
     console.info(`[${nextId.toString().padStart(9, ' ')}] data from: ${url}`);
+    // const data = await getDataFromUrl(url, browser);
+
     
     await Wait(Math.random() * 5000);
     nextId++;
@@ -23,11 +23,26 @@ async function main(): Promise<void> {
   return;
 }
 
-async function getDataFromUrl(url: string, browser: Puppeteer.Browser) {
+async function getDataFromUrl(url: string, browser) {
   const page: Puppeteer.page = await browser.newPage();
 
   await page.setRequestInterception(true);
+  page.on('request', request => {
+    const resourceType = request.resourceType()
+
+    if (resourceType === 'document') {
+      request.continue()
+    } else {
+      request.abort()
+    }
+  })
+
+  page.on('requestfinished', (request) => {
+    console.info('requestfinished', request.status());
+  });
   await page.goto(url);
+
+  return url;
 }
 
 main().finally(() => {
