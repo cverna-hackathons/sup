@@ -1,6 +1,6 @@
 export enum Unit {
-    in,
-    cm,
+    in = 'in',
+    cm = 'cm',
 }
 
 export interface Author {
@@ -38,6 +38,7 @@ export enum QueryParam {
 }
 
 export interface Query {
+    resolution: number[];
     material?: string[];
     media?: string[];
     subject?: string[];
