@@ -12,6 +12,9 @@ export class Author {
   id!: string;
 
   @Column()
+  foreignId?: string;
+
+  @Column()
   name!: string;
 
   @Column()
@@ -21,11 +24,11 @@ export class Author {
   following?: number;
 
   @Column()
-  totalArtCount!: number;
+  totalArtCount?: number;
 
   @Column()
-  soldArtCount!: number;
+  soldArtCount?: number;
 
   @OneToMany(_ => Image, image => image.author)
-  images: Image[];
+  images!: Image[];
 }

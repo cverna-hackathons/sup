@@ -1,4 +1,4 @@
-# Knowledge of SUP
+# Data store of SUP
 Purpose is to provide simple way to save and fetch data sets used for machine learning models.
 
 ## Getting started
@@ -11,6 +11,7 @@ Just `npm install` and use provided npm scripts or exported functions from files
 
 interface Author {
     name: string;
+    foreignId?: string;
     followers?: number;
     following?: number;
     totalArtCount?: number;

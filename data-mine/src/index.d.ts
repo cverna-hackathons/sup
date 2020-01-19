@@ -5,6 +5,7 @@ export enum Unit {
 
 export interface Author {
     name: string;
+    foreignId?: string;
     followers?: number;
     following?: number;
     totalArtCount?: number;
@@ -19,10 +20,10 @@ export interface Size {
 
 export interface Entry {
     imageBase64: string;
-    material: string[];
-    media: string[];
-    subject: string[];
-    style: string[];
+    materials: string[];
+    medias: string[];
+    subjects: string[];
+    styles: string[];
     size: Size;
     title?: string;
     country?: string;
@@ -38,9 +39,9 @@ export enum QueryParam {
 }
 
 export interface Query {
-    resolution: number[];
-    material?: string[];
-    media?: string[];
-    subject?: string[];
-    style?: string[];
+    resolutions: number[];
+    materials?: string[];
+    medias?: string[];
+    subjects?: string[];
+    styles?: string[];
 }

@@ -41,13 +41,13 @@ export class Image {
   @ManyToMany(_ => Style, style => style.images)
   styles!: Style[];
 
-  @ManyToMany(_ => Country, country => country.images)
-  countries!: Country[];
+  @ManyToOne(_ => Country, country => country.images)
+  country?: Country;
 
   @OneToOne(_ => Dimension)
   @JoinColumn()
-  dimensions!: Dimension;
+  dimension!: Dimension;
 
   @ManyToOne(_ => Author, author => author.images)
-  author!: Author;
+  author?: Author;
 }
