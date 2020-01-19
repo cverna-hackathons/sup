@@ -1,4 +1,4 @@
-# Data mining module of SUP
+# Knowledge of SUP
 Purpose is to provide simple way to save and fetch data sets used for machine learning models.
 
 ## Getting started
