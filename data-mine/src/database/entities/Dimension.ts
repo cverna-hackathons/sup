@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Unit } from '../../index.d';
+import { Unit } from '../../types/index';
 
 @Entity()
 export class Dimension {

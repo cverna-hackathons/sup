@@ -4,7 +4,7 @@ import { Image } from './Image';
 
 @Entity()
 export class Country extends Tag {
-  @ManyToMany(_ => Image, image => image.countries)
+  @ManyToMany(_ => Image, image => image.country)
   @JoinTable()
   images!: Image[];
 }

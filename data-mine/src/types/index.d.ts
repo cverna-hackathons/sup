@@ -1,7 +1,4 @@
-export enum Unit {
-    in = 'in',
-    cm = 'cm',
-}
+import { Unit } from './index';
 
 export interface Author {
     name: string;

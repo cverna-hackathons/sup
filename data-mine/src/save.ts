@@ -4,7 +4,7 @@ import {
   ObjectType,
 } from 'typeorm';
 
-import { Entry, Size, Author } from './index.d';
+import { Entry, Size, Author } from './types/index.d';
 import { Image } from './database/entities/Image';
 import { Material } from './database/entities/Material';
 import { Media } from './database/entities/Media';
@@ -99,5 +99,7 @@ export async function saveEntry(entry: Entry): Promise<Image> {
   image.dimension = await getDimension(entry.size);
   image.author = entry.author ? await getAuthor(entry.author) : undefined;
 
-  return await manager.save(image);
+  const newImage = await manager.save(image);
+  await manager.connection.close();
+  return newImage;
 }
