@@ -14,6 +14,12 @@ import { Country } from './database/entities/Country';
 import { Dimension } from './database/entities/Dimension';
 import { Author as AuthorEntity } from './database/entities/Author';
 
+import * as path from "path";
+import * as dotenv from 'dotenv';
+const env = process.env.ENVIRONMENT || '';
+const envPath = path.resolve(__dirname, `../config/${env}.env`)
+dotenv.config({ path: envPath});
+
 async function storeImageBase64(base64: string): Promise<string> {
   // TODO store image and return public url to it
   console.log(base64);

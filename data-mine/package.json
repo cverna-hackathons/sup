@@ -4,7 +4,7 @@
   "description": "Data mining module of sup",
   "main": "src/index.ts",
   "scripts": {
-    "test": "jest",
+    "test": "ENVIRONMENT=testing jest",
     "db:fixtures:load": "ts-node src/database/fixtures/load.ts",
     "db:migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
     "db:migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",

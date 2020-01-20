@@ -1,4 +1,3 @@
-// import { Entry, Query, QueryParam } from './index.d';
 import { saveEntry } from './save';
 
 export const saveDataEntry = saveEntry;
