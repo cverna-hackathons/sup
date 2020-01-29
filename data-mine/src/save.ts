@@ -1,3 +1,6 @@
+import * as Request from 'request';
+import * as Sharp from 'sharp';
+import { createWriteStream } from 'fs';
 import {
   createConnection,
   getRepository,
@@ -17,13 +20,25 @@ import { Author as AuthorEntity } from './database/entities/Author';
 import * as path from "path";
 import * as dotenv from 'dotenv';
 const env = process.env.ENVIRONMENT || '';
-const envPath = path.resolve(__dirname, `../config/${env}.env`)
+const envPath = path.resolve(__dirname, `../config/${env}.env`);
 dotenv.config({ path: envPath});
 
-async function storeImageBase64(base64: string): Promise<string> {
-  // TODO store image and return public url to it
-  console.log(base64);
-  return Promise.resolve('DADA');
+export async function storeImage(imageUrl: string): Promise<string> {
+  const imageFilePath = '/tmp/holubicka.jpg'
+  const imageStream = Request(imageUrl)
+
+  const resizer = Sharp()
+    .resize(100, 100)
+    .jpeg()
+  
+  return new Promise((resolve) => {
+    // First, download the image
+    imageStream
+      // Second resize the image
+      .pipe(resizer)
+      .pipe(createWriteStream(imageFilePath))
+      .on('close', () => resolve(imageFilePath))
+  })
 }
 
 async function getStringEntities<T>(
@@ -91,7 +106,7 @@ export async function saveEntry(entry: Entry): Promise<Image> {
   const { manager } = await createConnection();
 
   const image = new Image();
-  image.imageUrl = await storeImageBase64(entry.imageBase64);
+  image.imageUrl = await storeImage(entry.imageUrl);
   image.title = entry.title;
   image.price = entry.price;
   image.materials = await getStringEntities<Material>(

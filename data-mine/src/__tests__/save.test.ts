@@ -1,10 +1,22 @@
 import { Connection, createConnection } from 'typeorm';
 
-import { saveEntry } from '../save';
+import {
+  saveEntry,
+  storeImage,
+} from '../save';
 import { Entry } from '../types/index.d';
 import { Unit } from '../types/index';
 
+const testImageUrl = 'https://gals.kindgirls.com/d3/carolina_sweets_21_30092/carolina_sweets_21_30092_1.jpg'
+
 describe('save', () => {
+  describe('#storeImage()', () => {
+    it('stores and returns image s3 object path', async () => {
+      const imagePath = await storeImage(testImageUrl)
+      
+      expect(typeof imagePath).toEqual('string')
+    })
+  })
   describe('#saveEntry()', () => {
     let connection: Connection;
     beforeEach(async () => {
@@ -20,7 +32,7 @@ describe('save', () => {
     });
     it('saves image into database', async () => {
       const entry: Entry = {
-        imageBase64: 'pngBase64',
+        imageUrl: testImageUrl,
         materials: ['canvas'],
         medias: ['Acrylic', 'charcoal'],
         subjects: ['urban'],

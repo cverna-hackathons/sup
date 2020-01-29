@@ -16,7 +16,7 @@ export interface Size {
 }
 
 export interface Entry {
-    imageBase64: string;
+    imageUrl: string;
     materials: string[];
     medias: string[];
     subjects: string[];
