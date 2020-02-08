@@ -42,3 +42,9 @@ export interface Query {
     subjects?: string[];
     styles?: string[];
 }
+
+export interface AWSCredentials {
+    key: string;
+    secret: string;
+    bucket: string;
+}

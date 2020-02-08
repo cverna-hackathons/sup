@@ -1,11 +1,8 @@
-import {
-  createConnection,
-  getRepository,
-  ObjectType,
-} from 'typeorm';
+import { createConnection, getRepository, ObjectType } from 'typeorm';
 import Jimp from 'jimp';
+import * as AWS from 'aws-sdk';
 
-import { Entry, Size, Author } from './types/index.d';
+import { Entry, Size, Author, AWSCredentials } from './types/index.d';
 import { Image } from './database/entities/Image';
 import { Material } from './database/entities/Material';
 import { Media } from './database/entities/Media';
@@ -15,23 +12,67 @@ import { Country } from './database/entities/Country';
 import { Dimension } from './database/entities/Dimension';
 import { Author as AuthorEntity } from './database/entities/Author';
 
-import * as path from "path";
+import * as path from 'path';
 import * as dotenv from 'dotenv';
 
 const env = process.env.ENVIRONMENT || '';
-const envPath = path.resolve(__dirname, `../config/${env}.env`)
-dotenv.config({ path: envPath});
+const envPath = path.resolve(__dirname, `../config/${env}.env`);
+dotenv.config({ path: envPath });
 
 const WIDTH = 256;
 const HEIGHT = 256;
 const IMAGE_DIR = path.resolve(__dirname, `./images/`);
 
-export async function storeImage(publicImageUrl: string, title: string = ''): Promise<string> {
+function getAWSCredentials(): AWSCredentials | undefined {
+  const { AWS_KEY, AWS_SECRET, AWS_BUCKET } = process.env;
+  if (AWS_KEY && AWS_SECRET && AWS_BUCKET) {
+    return {
+      key: AWS_KEY,
+      secret: AWS_SECRET,
+      bucket: AWS_BUCKET
+    };
+  }
+  return undefined;
+}
+
+function awsUpload(buffer: Buffer, fileName: string, credentials: AWSCredentials): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const s3 = new AWS.S3({
+      accessKeyId: credentials.key,
+      secretAccessKey: credentials.secret
+    });
+
+    s3.upload({
+      Bucket: credentials.bucket,
+      Key: fileName,
+      Body: buffer,
+    }, function(err: any, data: any) {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(data.Location);
+    });
+  })
+}
+
+export async function storeImage(
+  publicImageUrl: string,
+  title: string = ''
+): Promise<string> {
   const image = await Jimp.read(publicImageUrl);
   await image.resize(WIDTH, HEIGHT);
-  const fileName = `${IMAGE_DIR}/${title}-${new Date()}.${image.getExtension()}`;
-  await image.writeAsync(fileName);
-  return fileName;
+
+  const fileName = `${title}-${Date.now()}.${image.getExtension()}`;
+  const credentials = getAWSCredentials();
+  if (credentials) {
+    const imageBuffer = await image.getBufferAsync(image.getMIME());
+    return awsUpload(imageBuffer, fileName, credentials);
+  } else {
+    const filePath = `${IMAGE_DIR}/${fileName}`;
+    await image.writeAsync(filePath);
+    return filePath;
+  }
 }
 
 async function getStringEntities<T>(
@@ -41,11 +82,14 @@ async function getStringEntities<T>(
   return Promise.all(
     names.map((name: string) => {
       return getStringEntity<T>(entity, name);
-    }),
+    })
   );
 }
 
-async function getStringEntity<T>(entity: ObjectType<T>, name: string): Promise<T> {
+async function getStringEntity<T>(
+  entity: ObjectType<T>,
+  name: string
+): Promise<T> {
   const repo = getRepository(entity);
   const entry = await repo.findOne({
     where: [
@@ -75,9 +119,11 @@ async function getDimension(size: Size): Promise<Dimension> {
 
 async function getAuthor(author: Author): Promise<AuthorEntity> {
   const repo = getRepository(AuthorEntity);
-  const query = author.foreignId ? { foreignId: author.foreignId } : { name: author.name };
+  const query = author.foreignId
+    ? { foreignId: author.foreignId }
+    : { name: author.name };
   const authorEntry = await repo.findOne({
-    where: query,
+    where: query
   });
   if (authorEntry) {
     // TODO maybe we want to update existing author with freshest data?
@@ -109,7 +155,9 @@ export async function saveEntry(entry: Entry): Promise<Image> {
   image.medias = await getStringEntities<Media>(Media, entry.medias);
   image.subjects = await getStringEntities<Subject>(Subject, entry.subjects);
   image.styles = await getStringEntities<Style>(Style, entry.styles);
-  image.country = entry.country ? await getStringEntity<Country>(Country, entry.country) : undefined;
+  image.country = entry.country
+    ? await getStringEntity<Country>(Country, entry.country)
+    : undefined;
   image.dimension = await getDimension(entry.size);
   image.author = entry.author ? await getAuthor(entry.author) : undefined;
 
