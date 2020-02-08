@@ -3,6 +3,7 @@ import {
   getRepository,
   ObjectType,
 } from 'typeorm';
+import Jimp from 'jimp';
 
 import { Entry, Size, Author } from './types/index.d';
 import { Image } from './database/entities/Image';
@@ -16,14 +17,21 @@ import { Author as AuthorEntity } from './database/entities/Author';
 
 import * as path from "path";
 import * as dotenv from 'dotenv';
+
 const env = process.env.ENVIRONMENT || '';
 const envPath = path.resolve(__dirname, `../config/${env}.env`)
 dotenv.config({ path: envPath});
 
-async function storeImageBase64(base64: string): Promise<string> {
-  // TODO store image and return public url to it
-  console.log(base64);
-  return Promise.resolve('DADA');
+const WIDTH = 256;
+const HEIGHT = 256;
+const IMAGE_DIR = path.resolve(__dirname, `./images/`);
+
+export async function storeImage(publicImageUrl: string, title: string = ''): Promise<string> {
+  const image = await Jimp.read(publicImageUrl);
+  await image.resize(WIDTH, HEIGHT);
+  const fileName = `${IMAGE_DIR}/${title}-${new Date()}.${image.getExtension()}`;
+  await image.writeAsync(fileName);
+  return fileName;
 }
 
 async function getStringEntities<T>(
@@ -91,7 +99,7 @@ export async function saveEntry(entry: Entry): Promise<Image> {
   const { manager } = await createConnection();
 
   const image = new Image();
-  image.imageUrl = await storeImageBase64(entry.imageBase64);
+  image.imageUrl = await storeImage(entry.imagePublicUrl, entry.title);
   image.title = entry.title;
   image.price = entry.price;
   image.materials = await getStringEntities<Material>(

@@ -25,7 +25,7 @@ interface Size {
 }
 
 interface Entry {
-    imageBase64: string;
+    imagePublicUrl: string;
     material: string[];
     media: string[];
     subject: string[];

@@ -1,6 +1,7 @@
 import { Connection, createConnection } from 'typeorm';
+import * as fs from 'fs';
 
-import { saveEntry } from '../save';
+import { saveEntry, storeImage } from '../save';
 import { Entry } from '../types/index.d';
 import { Unit } from '../types/index';
 
@@ -20,7 +21,7 @@ describe('save', () => {
     });
     it('saves image into database', async () => {
       const entry: Entry = {
-        imageBase64: 'pngBase64',
+        imagePublicUrl: 'pngBase64',
         materials: ['canvas'],
         medias: ['Acrylic', 'charcoal'],
         subjects: ['urban'],
@@ -28,7 +29,7 @@ describe('save', () => {
         size: {
           width: 100,
           height: 150,
-          unit: Unit.cm,
+          unit: Unit.cm
         },
         title: 'New york in dark',
         country: 'US',
@@ -39,13 +40,24 @@ describe('save', () => {
           followers: 100,
           following: 10,
           totalArtCount: 2,
-          soldArtCount: 1,
-        },
+          soldArtCount: 1
+        }
       };
 
       const savedImage = await saveEntry(entry);
 
       expect(JSON.stringify(savedImage)).toMatchSnapshot();
+    });
+  });
+
+  describe('#storeImage()', () => {
+    it('stores resized image on localhost', async () => {
+      const path = await storeImage(
+        'https://lh3.googleusercontent.com/proxy/Y5tFZiY63lftpBgz1_k-pOGqvhvtiRr3Ou00mQfz6a3Wc5MTc7N0xgscNrgHIITbHj1cLw8UGMO4ZqFUA_DPg5Vugp3TyVatVxs',
+        'Hermiona',
+      );
+
+      expect(fs.existsSync(path)).toBe(true);
     });
   });
 });
