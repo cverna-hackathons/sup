@@ -14,7 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.614.0",
     "dotenv": "^8.2.0",
+    "fs-extra": "^8.1.0",
+    "jimp": "^0.9.3",
     "node-ts": "^5.0.3",
     "pg": "^7.15.0",
     "reflect-metadata": "^0.1.13",
@@ -22,6 +25,7 @@
     "typescript": "^3.7.4"
   },
   "devDependencies": {
+    "@types/fs-extra": "^8.0.1",
     "@types/jest": "^24.0.24",
     "@types/node": "^12.12.21",
     "jest": "^24.9.0",

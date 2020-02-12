@@ -16,7 +16,7 @@ export interface Size {
 }
 
 export interface Entry {
-    imageBase64: string;
+    imagePublicUrl: string;
     materials: string[];
     medias: string[];
     subjects: string[];
@@ -41,4 +41,10 @@ export interface Query {
     medias?: string[];
     subjects?: string[];
     styles?: string[];
+}
+
+export interface AWSCredentials {
+    key: string;
+    secret: string;
+    bucket: string;
 }
