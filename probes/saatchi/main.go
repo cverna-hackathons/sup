@@ -9,6 +9,12 @@ import "os"
 
 // go get github.com/imroc/req
 import "github.com/imroc/req"
+import (
+    "./transformator"
+)
+import (
+    "./types"
+)
 
 const ROOT_URL = "https://www.saatchiart.com/paintings/fine-art"
 const ROOT_API_URL = "-dsn.algolia.net/1/indexes/production_all_artworks/query"
@@ -18,7 +24,7 @@ const HITS_PER_FILE = 10000
 const DATA_DIR = "./data/"
 
 type ApiResponse struct {
-	Hits []*json.RawMessage
+	Hits []*types.SaatchiRecord
 }
 
 func checkErr(err error) {
@@ -64,10 +70,12 @@ func getFileName(category string, page int) string {
 
 func downloadPartToFile(apiUrl string, queryParams req.QueryParam, category string, page int) {
     var apiResponse ApiResponse
+
     r, err := req.Post(apiUrl, req.BodyJSON(getParams(page, category)), queryParams)
     checkErr(err)
     r.ToJSON(&apiResponse)
-    j, _ := json.Marshal(&apiResponse.Hits)
+    outputArray := transformApiResponse(apiResponse.Hits)
+    j, _ := json.Marshal(&outputArray)
     f, err := os.Create(getFileName(category, page - 1))
     checkErr(err)
     f.WriteString(string(j))
@@ -88,7 +96,16 @@ func downloadCategory(category string, startPage int, pageCount int) {
     }
 }
 
+func transformApiResponse(records []*types.SaatchiRecord) []types.Entry {
+    var entries []types.Entry
+
+    for i := 0; i < len(records); i++ {
+        entries = append(entries, transformator.Transform(records[i]))
+    }
+
+    return entries
+}
+
 func main() {
     downloadCategory("Paintings", 1, 200)
 }
-
