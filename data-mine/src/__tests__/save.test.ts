@@ -29,7 +29,7 @@ describe('save', () => {
 
     it('saves image into database', async () => {
       const entry: Entry = {
-        imagePublicUrl: 'https://lh3.googleusercontent.com/proxy/Y5tFZiY63lftpBgz1_k-pOGqvhvtiRr3Ou00mQfz6a3Wc5MTc7N0xgscNrgHIITbHj1cLw8UGMO4ZqFUA_DPg5Vugp3TyVatVxs',
+        imagePublicUrl: 'https://gals.kindgirls.com/d3/clover_10993/clover_10993_12.jpg',
         materials: ['canvas'],
         medias: ['Acrylic', 'charcoal'],
         subjects: ['urban'],
