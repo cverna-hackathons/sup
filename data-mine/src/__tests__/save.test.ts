@@ -2,7 +2,7 @@ import { Connection, createConnection } from 'typeorm';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 
-import { saveEntry } from '../save';
+import { saveEntries } from '../save';
 import { Entry } from '../types/index.d';
 import { Unit } from '../types/index';
 
@@ -21,14 +21,14 @@ describe('save', () => {
     });
 
     afterAll(async () => {
-      connection = await createConnection();
-      await connection.dropDatabase();
-      await connection.close();
+      // connection = await createConnection();
+      // await connection.dropDatabase();
+      // await connection.close();
       dateNowSpy.mockRestore();
     });
 
     it('saves image into database', async () => {
-      const entry: Entry = {
+      const entry: Entry[] = [{
         imagePublicUrl: 'https://gals.kindgirls.com/d3/clover_10993/clover_10993_12.jpg',
         materials: ['canvas'],
         medias: ['Acrylic', 'charcoal'],
@@ -50,9 +50,9 @@ describe('save', () => {
           totalArtCount: 2,
           soldArtCount: 1
         }
-      };
+      }];
 
-      const savedImage = await saveEntry(entry);
+      const [savedImage] = await saveEntries(entry);
 
       expect(JSON.stringify(savedImage)).toMatchSnapshot();
       expect(fs.existsSync(savedImage.imageUrl)).toBe(true);

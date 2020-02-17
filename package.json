@@ -6,6 +6,7 @@
   "scripts": {
     "start": "lerna run start --stream",
     "test": "lerna run test --stream",
+    "mine:saatchi": "./probes/saatchi/main | ts-node --project data-mine/tsconfig.json ./data-mine/writer.ts",
     "install-dependencies": "lerna bootstrap"
   },
   "repository": {
@@ -19,6 +20,6 @@
   },
   "homepage": "https://github.com/cverna-hackathons/sup#readme",
   "devDependencies": {
-    "lerna": "^3.18.1"
+    "lerna": "^3.18.1,"
   }
 }

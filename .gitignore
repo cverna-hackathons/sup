@@ -66,3 +66,4 @@ typings/
 
 # default images static storage
 tmp/
+data/

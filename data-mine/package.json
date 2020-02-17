@@ -9,7 +9,8 @@
     "db:migration:create": "ts-node ./node_modules/.bin/typeorm migration:create",
     "db:migration:generate": "ts-node ./node_modules/.bin/typeorm migration:generate",
     "db:migration:run": "ts-node ./node_modules/.bin/typeorm migration:run",
-    "db:migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert"
+    "db:migration:revert": "ts-node ./node_modules/.bin/typeorm migration:revert",
+    "db:synchronize": "ts-node ./src/database/synchronize.ts"
   },
   "author": "",
   "license": "ISC",
