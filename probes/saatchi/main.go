@@ -6,6 +6,7 @@ import "strings"
 import "encoding/json"
 import "strconv"
 import "os"
+import "path/filepath"
 
 // go get github.com/imroc/req
 import "github.com/imroc/req"
@@ -63,24 +64,26 @@ func getParams(page int, category string) req.Param {
     }
 }
 
-func getFileName(category string, page int) string {
+func getFileName(category string, page int) (string, error) {
     actualCount := page * HITS_PER_FILE
-    return DATA_DIR + strings.ToUpper(category) + "/" + strconv.Itoa(actualCount) + "-" + strconv.Itoa(actualCount + HITS_PER_FILE) + ".json"
+    return filepath.Abs(DATA_DIR + strings.ToUpper(category) + "/" + strconv.Itoa(actualCount) + "-" + strconv.Itoa(actualCount + HITS_PER_FILE) + ".json")
 }
 
 func downloadPartToFile(apiUrl string, queryParams req.QueryParam, category string, page int) {
     var apiResponse ApiResponse
 
+    filePath, _ := getFileName(category, page - 1)
     r, err := req.Post(apiUrl, req.BodyJSON(getParams(page, category)), queryParams)
     checkErr(err)
     r.ToJSON(&apiResponse)
     outputArray := transformApiResponse(apiResponse.Hits)
     j, _ := json.Marshal(&outputArray)
-    f, err := os.Create(getFileName(category, page - 1))
+    f, err := os.Create(filePath)
     checkErr(err)
     f.WriteString(string(j))
     f.Sync()
     f.Close()
+    fmt.Println(filePath)
 }
 
 func downloadCategory(category string, startPage int, pageCount int) {
@@ -107,5 +110,5 @@ func transformApiResponse(records []*types.SaatchiRecord) []types.Entry {
 }
 
 func main() {
-    downloadCategory("Paintings", 1, 200)
+    downloadCategory("Paintings", 1, 2)
 }
