@@ -17,16 +17,24 @@ export class Author {
   @Column()
   name!: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   followers?: number;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   following?: number;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   totalArtCount?: number;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   soldArtCount?: number;
 
   @OneToMany(_ => Image, image => image.author)

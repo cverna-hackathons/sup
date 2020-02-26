@@ -1,6 +1,7 @@
 import { createConnection, getRepository, ObjectType, EntityManager } from 'typeorm';
 import Jimp from 'jimp';
 import * as AWS from 'aws-sdk';
+import fetch from 'node-fetch';
 
 import { Entry, Size, Author, AWSCredentials } from './types/index.d';
 import { Image } from './database/entities/Image';
@@ -60,11 +61,13 @@ export async function storeImage(
   publicImageUrl: string,
   title: string = ''
 ): Promise<string> {
-  const image = await Jimp.read(publicImageUrl);
+  const imageFetchResponse = await fetch(publicImageUrl);
+  const imageBuffer = await imageFetchResponse.buffer();
+  const image = await Jimp.read(imageBuffer);
   await image.resize(WIDTH, HEIGHT);
-
   const fileName = `${title}-${Date.now()}.${image.getExtension()}`;
   const credentials = getAWSCredentials();
+  console.log(credentials)
   if (credentials) {
     const imageBuffer = await image.getBufferAsync(image.getMIME());
     return awsUpload(imageBuffer, fileName, credentials);

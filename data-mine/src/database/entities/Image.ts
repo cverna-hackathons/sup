@@ -23,10 +23,14 @@ export class Image {
   @Column()
   imageUrl!: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   title?: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   price?: number;
 
   @ManyToMany(_ => Material, material => material.images)
