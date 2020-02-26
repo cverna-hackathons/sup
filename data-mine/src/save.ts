@@ -65,9 +65,9 @@ export async function storeImage(
   const imageBuffer = await imageFetchResponse.buffer();
   const image = await Jimp.read(imageBuffer);
   await image.resize(WIDTH, HEIGHT);
-  const fileName = `${title}-${Date.now()}.${image.getExtension()}`;
+  const sanitizedName = title.replace(/[^a-zA-Z0-9_\-]/gi, '_');
+  const fileName = `${Date.now()}-${sanitizedName}.${image.getExtension()}`;
   const credentials = getAWSCredentials();
-  console.log(credentials)
   if (credentials) {
     const imageBuffer = await image.getBufferAsync(image.getMIME());
     return awsUpload(imageBuffer, fileName, credentials);
