@@ -36,7 +36,7 @@ describe('save', () => {
           medias: ['Oil'],
           subjects: ['Mortality'],
           styles: ['Figurative', 'Fine Art', 'Realism'],
-          size: { width: 28, height: 36, unit: Unit['cm'] },
+          size: { width: 28.1, height: 36, unit: Unit['cm'] },
           title: 'Study of a skull',
           country: 'Romania',
           price: 430,

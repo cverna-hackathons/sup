@@ -21,7 +21,7 @@ const ROOT_URL = "https://www.saatchiart.com/paintings/fine-art"
 const ROOT_API_URL = "-dsn.algolia.net/1/indexes/production_all_artworks/query"
 const RE_APPLICATION_ID = `applicationId\"\:\"(?P<id>.*)\"\,\"nextApp`
 const RE_API_KEY = `searchApi\"\:\"(?P<id>.*)\"\,\"searchIndice`
-const HITS_PER_FILE = 10000
+const HITS_PER_FILE = 1000
 const DATA_DIR = "./data/"
 
 type ApiResponse struct {
@@ -110,5 +110,5 @@ func transformApiResponse(records []*types.SaatchiRecord) []types.Entry {
 }
 
 func main() {
-    downloadCategory("Paintings", 1, 2)
+    downloadCategory("Paintings", 1, 1)
 }

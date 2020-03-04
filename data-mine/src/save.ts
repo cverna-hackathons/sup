@@ -145,9 +145,17 @@ async function getAuthor(author: Author): Promise<AuthorEntity> {
 
 export async function saveEntries(entries: Entry[]): Promise<Image[]> {
   const { manager } = await createConnection();
-  const images = await Promise.all(
-    entries.map(entry => saveEntry(entry, manager))
-  );
+  const images = []
+
+  let idx = 0;
+
+  for (const entry of entries) {
+    const image = await saveEntry(entry, manager);
+
+    idx++;
+    console.log(`saved [${idx}]`, entry.imagePublicUrl);
+    images.push(image);
+  }
 
   await manager.connection.close();
 
@@ -156,7 +164,6 @@ export async function saveEntries(entries: Entry[]): Promise<Image[]> {
 
 export async function saveEntry(entry: Entry, manager?: EntityManager): Promise<Image> {
   // TODO sanitize entry (all data lower cased, trimmed ...) so we don't have duplicates
-
   if (!manager) {
     manager = (await createConnection()).manager;
   }
