@@ -6,6 +6,7 @@
   "scripts": {
     "start": "lerna run start --stream",
     "test": "lerna run test --stream",
+    "mine:saatchi": "./probes/saatchi/main | ts-node --project data-mine/tsconfig.json ./data-mine/writer.ts",
     "install-dependencies": "lerna bootstrap"
   },
   "repository": {

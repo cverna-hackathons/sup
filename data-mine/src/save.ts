@@ -1,6 +1,7 @@
-import { createConnection, getRepository, ObjectType } from 'typeorm';
+import { createConnection, getRepository, ObjectType, EntityManager } from 'typeorm';
 import Jimp from 'jimp';
 import * as AWS from 'aws-sdk';
+import fetch from 'node-fetch';
 
 import { Entry, Size, Author, AWSCredentials } from './types/index.d';
 import { Image } from './database/entities/Image';
@@ -60,10 +61,12 @@ export async function storeImage(
   publicImageUrl: string,
   title: string = ''
 ): Promise<string> {
-  const image = await Jimp.read(publicImageUrl);
+  const imageFetchResponse = await fetch(publicImageUrl);
+  const imageBuffer = await imageFetchResponse.buffer();
+  const image = await Jimp.read(imageBuffer);
   await image.resize(WIDTH, HEIGHT);
-
-  const fileName = `${title}-${Date.now()}.${image.getExtension()}`;
+  const sanitizedName = title.replace(/[^a-zA-Z0-9_\-]/gi, '_');
+  const fileName = `${Date.now()}-${sanitizedName}.${image.getExtension()}`;
   const credentials = getAWSCredentials();
   if (credentials) {
     const imageBuffer = await image.getBufferAsync(image.getMIME());
@@ -140,9 +143,30 @@ async function getAuthor(author: Author): Promise<AuthorEntity> {
   return repo.save(newAuthorEntry);
 }
 
-export async function saveEntry(entry: Entry): Promise<Image> {
-  // TODO sanitize entry (all data lower cased, trimmed ...) so we don't have duplicates
+export async function saveEntries(entries: Entry[]): Promise<Image[]> {
   const { manager } = await createConnection();
+  const images = []
+
+  let idx = 0;
+
+  for (const entry of entries) {
+    const image = await saveEntry(entry, manager);
+
+    idx++;
+    console.log(`saved [${idx}]`, entry.imagePublicUrl);
+    images.push(image);
+  }
+
+  await manager.connection.close();
+
+  return images;
+}
+
+export async function saveEntry(entry: Entry, manager?: EntityManager): Promise<Image> {
+  // TODO sanitize entry (all data lower cased, trimmed ...) so we don't have duplicates
+  if (!manager) {
+    manager = (await createConnection()).manager;
+  }
 
   const image = new Image();
   image.imageUrl = await storeImage(entry.imagePublicUrl, entry.title);
@@ -162,6 +186,6 @@ export async function saveEntry(entry: Entry): Promise<Image> {
   image.author = entry.author ? await getAuthor(entry.author) : undefined;
 
   const newImage = await manager.save(image);
-  await manager.connection.close();
+  // await manager.connection.close();
   return newImage;
 }

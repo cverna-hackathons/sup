@@ -6,10 +6,14 @@ export class Dimension {
   @PrimaryGeneratedColumn()
   id!: string;
 
-  @Column()
+  @Column({
+    type: 'float'
+  })
   width!: number;
 
-  @Column()
+  @Column({
+    type: 'float'
+  })
   height!: number;
 
   @Column({
