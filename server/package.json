@@ -61,7 +61,7 @@
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
     "tslint-config-prettier": "^1.18.0",
-    "typeorm": "^0.2.19",
+    "typeorm": "^0.2.25",
     "typescript": "^3.6.3",
     "uniqid": "^5.1.0"
   },
